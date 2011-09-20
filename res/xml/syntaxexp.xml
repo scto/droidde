@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:key="JavaKeywords" android:defaultValue="\\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|transient|try|void|volatile|while|false|true|null)\\b"></EditTextPreference>
+    <EditTextPreference android:key="CSingleLineComment" android:defaultValue="//.*$"></EditTextPreference>
+    <EditTextPreference android:key="CMultiLineComment" android:defaultValue="/\\*.*?\\*/"></EditTextPreference>
+    
+</PreferenceScreen>
