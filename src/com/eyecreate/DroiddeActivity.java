@@ -1,10 +1,6 @@
 package com.eyecreate;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 public class DroiddeActivity extends Activity {
