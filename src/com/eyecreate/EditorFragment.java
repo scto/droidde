@@ -34,6 +34,7 @@ public class EditorFragment extends Fragment {
 		 }
 		 File extStorage = Environment.getExternalStorageDirectory();
 		 File confDir = new File(extStorage,"droidde-config");
+		 if(!confDir.exists()) confDir.mkdirs();
 		 File configFile = new File(confDir,"syntax.xml");
 		 if(!configFile.exists()) copyFile("syntaxregex.xml",configFile.getAbsolutePath());
 		 super.onActivityCreated(bundle);
