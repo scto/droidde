@@ -4,4 +4,8 @@
     <string name="app_name">Droidde</string>
     <string name="newproject">New Project</string>
     <string name="invalidProject">Project is Invalid! Cannot load!</string>
+    <string name="project_name">untitledProject1</string>
+    <string name="project_name_label">Project Name</string>
+    <string name="project_location_label">Project Directory</string>
+    <string name="project_location_hint">Click and browse to the desired project directory</string>
 </resources>
