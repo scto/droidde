@@ -11,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import android.util.Log;
+
 public class Project {
 
 	private Document projectXML = null;
@@ -18,14 +20,25 @@ public class Project {
 	private boolean isValid;
 	private ProjectTypes projectType;
 	private List<File> projectFiles;
+	private List<File> projectLibs;
+	private String projectName;
+	private File projectFile;
+	private String projectAuthor = "";
 	
 	//This class manages the project structure from the project XML and gives other classes information about the loaded project.
+	//In order to make error finding easier, pass a Directory, name, and type when you need a new project and the project.xml when you need it loaded.
 	public Project(String path) {
-		path=initialSanityChecks(path);
+		initialSanityChecks(path);
 		try {
 			dBuilder=DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			projectXML = dBuilder.parse(new File(path));
-			//TODO:Write code to read project here
+			if(projectXML.getChildNodes().item(0).getNodeName().equals("Project")){
+				isValid=true;
+				processXMLForLoad();
+			}
+			else{
+				isValid=false;
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 			isValid = false;
@@ -36,27 +49,76 @@ public class Project {
 			e.printStackTrace();
 			isValid = false;
 		}
-		isValid=true;
 	}
 	
-	private String initialSanityChecks(String path) {
-		//In order to make error finding easier, pass a Directory when you need a new project and the project.xml when you need it loaded.
+	public Project(String path, String name, String type) {
+		File projectDir=new File(path);
+		if(projectDir.isDirectory() && projectDir.list().length==0)
+		{
+			createProject(new File(path),name,type);
+			isValid=true;
+		}
+		else
+		{
+			Log.e("Droidde","Project directory is not empty. Must be empty in order to start a new project.");
+			isValid=false;
+		}
+	}
+	
+	private void initialSanityChecks(String path) {
 		File filePath = new File(path);
 		if(!filePath.exists()) isValid=false;
-		if(filePath.isDirectory()) path=createProject(filePath).getAbsolutePath();
-		return path;
 		
 	}
 
-	private File createProject(File filePath)
+	private void createProject(File filePath,String name, String type)
 	{
-		//TODO:write code to write project structure to XML. Then pass made file out to return.
-		return filePath;
+		try{
+			projectType = ProjectTypes.valueOf(type.toUpperCase());
+			projectName = name;
+			projectFile = new File(filePath.getAbsolutePath()+File.pathSeparator+projectName+".xml");
+			createProjectFileList(filePath);
+			for(String s: projectType.getDefaultLibs()){
+				if(!(new File(filePath.getAbsolutePath()+File.pathSeparator+s).exists())){
+					Log.w("Droidde","File "+filePath.getAbsolutePath()+File.pathSeparator+s+" was not found. You might want to find out why this file wasn't found.");
+				}
+				projectLibs.add(new File(filePath.getAbsolutePath()+File.pathSeparator+s));
+			}
+			triggerProjectStateSave();
+		}
+		catch(IllegalArgumentException e){
+			Log.e("Droidde", "Invalid project type given to createProject");
+			isValid=false;
+		}
 	}
 	
+	private void triggerProjectStateSave() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void createProjectFileList(File filePath)
 	{
-		//TODO:write code to read folders recursively and add compatible project file to list.
+		recursiveDirectorySearch(filePath);
+	}
+	
+	private void recursiveDirectorySearch(File dir)
+	{
+		File[] dirs = dir.listFiles();
+		for (File f :dirs)
+		{
+			if(f.isDirectory()){
+				recursiveDirectorySearch(f);
+			}
+			if(f.isFile() && projectType.isAcceptedFile(f.getName().split(".")[1])){
+				projectFiles.add(f);
+			}
+		}
+	}
+	
+	private void processXMLForLoad()
+	{
+		//TODO:Create XML parsing
 	}
 	
 	public boolean isValid(){
@@ -66,6 +128,11 @@ public class Project {
 	public List<File> getProjectFiles()
 	{
 		return projectFiles;
+	}
+	
+	public ProjectTypes getProjectType()
+	{
+		return projectType;
 	}
 
 }

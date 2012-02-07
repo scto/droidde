@@ -11,12 +11,14 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
 public class DroiddeActivity extends Activity {
 	
-    /** Called when the activity is first created. */
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class DroiddeActivity extends Activity {
         }
         Project loadedProject = new Project(getIntent().getData().getPath());
         if(loadedProject.isValid()) setUpProjectSpace(loadedProject);
+        if(!loadedProject.isValid()) findFaultAndNotify();
         /*FragmentManager fragman=getFragmentManager();
         FragmentTransaction editortrans = fragman.beginTransaction();
         Fragment editorfrag = new EditorFragment();
@@ -41,8 +44,20 @@ public class DroiddeActivity extends Activity {
         
     }
 
+	private void findFaultAndNotify() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void setUpProjectSpace(Project loadedProject) {
 		// TODO Auto-generated method stub
+		//Check if some specific files are missing and notify
+		for(File f : loadedProject.getProjectFiles())
+		{
+			if(loadedProject.getProjectType().equals(ProjectTypes.ANDROID) && f.getName().equals("android.jar") && !f.exists()){
+				Toast.makeText(getApplicationContext(), "File android.jar was missing from project folder. Please copy this from an android SDK to your project folder.",Toast.LENGTH_LONG).show();
+			}
+		}
 		
 	}
 
