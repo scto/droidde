@@ -27,7 +27,7 @@ public class EditorFragment extends Fragment {
 	 @Override
 	 public void onActivityCreated(Bundle bundle) {
 		 if(bundle != null) {
-			 //
+			 //Put stuff here if getting a present!
 		 }
 		 else {
 			 //
@@ -64,6 +64,13 @@ public class EditorFragment extends Fragment {
 		    }
 
 		}
+	 
+	 public void openFile(File f)
+	 {
+		 RichEditText ret = (RichEditText) getActivity().findViewById(R.id.editorcontent);
+		 //TODO:change contents here
+		 //BufferedReader input =  new BufferedReader(new InputStreamReader (aFile));
+	 }
 
 	 
 	 @Override
