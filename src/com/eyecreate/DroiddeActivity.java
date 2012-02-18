@@ -35,7 +35,8 @@ public class DroiddeActivity extends Activity {
         else{
         	throwInvalid();
         }
-        Project loadedProject = new Project(getIntent().getData().getPath());
+        Project loadedProject = null;
+        if(findProjectType(getIntent().getData().getPath()).equals("Android")) loadedProject = new AndroidProject(getIntent().getData().getPath());
         if(loadedProject.isValid()) setUpProjectSpace(loadedProject);
         if(!loadedProject.isValid()) findFaultAndNotify();
         
@@ -84,7 +85,7 @@ public class DroiddeActivity extends Activity {
 		try {
 			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(new File(path));
-			if(doc.getChildNodes().item(0).getNodeName().equals("Project")){
+			if(doc.getChildNodes().item(0).getNodeName().toLowerCase().equals("project")){
 				return true;
 			}
 			else{
@@ -102,5 +103,24 @@ public class DroiddeActivity extends Activity {
 			return false;
 		}
 		
+	}
+	
+	private String findProjectType(String path){
+		DocumentBuilder builder;
+		try {
+			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document doc = builder.parse(new File(path));
+			if(doc.getChildNodes().item(0).getNodeName().toLowerCase().equals("project")){
+				return doc.getChildNodes().item(0).getAttributes().getNamedItem("type").getTextContent();
+			}
+		}catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} 
+		catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 }
