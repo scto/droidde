@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -132,6 +133,18 @@ public class SyntaxConfig {
 		// get regex value from Map
 		return (String) ((Map<String, String>) languageRegex.get(languageType))
 				.get(valueName);
+	}
+	
+	public String languageFromFileType(String s){
+		for(String l : languageRegex.keySet())
+		{
+			//Get language type and split into file extensions
+			for(String type :((String) ((Map<String,String>) languageRegex.get(l)).get("FileTypes")).split(","))
+			{
+				if(type.equals(s)) return l;
+			}
+		}
+		return "";
 	}
 }
 

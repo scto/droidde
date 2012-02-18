@@ -27,6 +27,10 @@ public class RichEditText extends EditText {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public void setCurrentLangFromExt(String s){
+		currentLang = syntaxRegex.languageFromFileType(s);
+	}
+	
 	public void onTextChanged(CharSequence text, int start, int before, int after) {
 		new Thread(new Runnable() {
 			    public void run() {

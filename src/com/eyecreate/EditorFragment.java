@@ -1,9 +1,19 @@
 package com.eyecreate;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+
+import org.apache.commons.io.FileUtils;
 
 import android.app.Fragment;
 import android.content.res.AssetManager;
@@ -68,8 +78,25 @@ public class EditorFragment extends Fragment {
 	 public void openFile(File f)
 	 {
 		 RichEditText ret = (RichEditText) getActivity().findViewById(R.id.editorcontent);
-		 //TODO:change contents here
-		 //BufferedReader input =  new BufferedReader(new InputStreamReader (aFile));
+		 try {
+			ret.setText(FileUtils.readFileToString(f));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 ret.setCurrentLangFromExt(f.getName().split(".")[f.getName().split(".").length-1]);
+
+	 }
+	 
+	 public void saveFile(File f)
+	 {
+		 RichEditText ret = (RichEditText) getActivity().findViewById(R.id.editorcontent);
+		 try {
+			FileUtils.writeStringToFile(f, ret.getText().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	 }
 
 	 
