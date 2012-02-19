@@ -2,6 +2,7 @@ package com.eyecreate;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.AbstractList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,6 +10,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.util.Log;
@@ -18,7 +21,7 @@ public class AndroidProject implements Project {
 	private Document projectXML = null;
 	private DocumentBuilder dBuilder = null;
 	private boolean isValid;
-	private ProjectTypes projectType;
+	private ProjectTypes projectType = ProjectTypes.ANDROID;
 	private List<File> projectFiles;
 	private List<File> projectLibs;
 	private String projectName;
@@ -32,8 +35,9 @@ public class AndroidProject implements Project {
 		try {
 			dBuilder=DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			projectXML = dBuilder.parse(new File(path));
-			if(projectXML.getChildNodes().item(0).getNodeName().equals("Project")){
+			if(projectXML.getChildNodes().item(0).getNodeName().toLowerCase().equals("project")){
 				isValid=true;
+				projectFile=new File(path);
 				processXMLForLoad();
 			}
 			else{
@@ -123,7 +127,49 @@ public class AndroidProject implements Project {
 	
 	private void processXMLForLoad()
 	{
-		//TODO:Create XML parsing
+		Node root=projectXML.getChildNodes().item(0);
+		projectName = root.getAttributes().getNamedItem("name").getTextContent();
+		projectAuthor = root.getAttributes().getNamedItem("author").getTextContent();
+		Node libs = null;
+		Node sources = null;
+		for(Node n : nodeList(root.getChildNodes()))
+		{
+			if(n.getNodeName().toLowerCase().equals("libs")) libs = n;
+			if(n.getNodeName().toLowerCase().equals("source")) sources = n;
+		}
+		for(Node n : nodeList(libs.getChildNodes()))
+		{
+			if(n.getNodeName().toLowerCase().equals("file")) projectLibs.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+		}
+		for(Node n : nodeList(sources.getChildNodes()))
+		{
+			if(n.getNodeName().toLowerCase().equals("file")) projectFiles.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+		}
+	}
+	
+	private List<Node> nodeList(final NodeList list) {
+		return new AbstractList<Node>() {
+			public int size() {
+				return list.getLength();
+			}
+
+			public Node get(int index) {
+				Node item = list.item(index);
+				if (item == null)
+					throw new IndexOutOfBoundsException();
+				return item;
+			}
+		};
+	}
+	
+	private File projectDirFromPath(String path)
+	{
+		String finalPath = "";
+		for(String s:path.split(File.pathSeparator))
+		{
+			if(!s.toLowerCase().contains(".xml"))finalPath+=s+File.pathSeparator;
+		}
+		return new File(finalPath);
 	}
 	
 	private void processProjectForSave()
