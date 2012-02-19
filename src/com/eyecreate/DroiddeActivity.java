@@ -15,11 +15,15 @@ import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 public class DroiddeActivity extends Activity {
 	
 	FragmentManager fragman;
+	Project loadedProject;
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,11 +39,33 @@ public class DroiddeActivity extends Activity {
         else{
         	throwInvalid();
         }
-        Project loadedProject = null;
+        loadedProject = null;
         if(findProjectType(getIntent().getData().getPath()).equals("Android")) loadedProject = new AndroidProject(getIntent().getData().getPath());
         if(loadedProject.isValid()) setUpProjectSpace(loadedProject);
         if(!loadedProject.isValid()) findFaultAndNotify();
         
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId())
+    	{
+	    	case R.id.saveproj:
+	    		loadedProject.triggerProjectStateSave();
+	    		return true;
+	    	case R.id.run:
+	    		loadedProject.runProject();
+	    		return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+    	}
     }
 
 	private void findFaultAndNotify() {
