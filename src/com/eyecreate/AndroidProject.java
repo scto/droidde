@@ -92,8 +92,8 @@ public class AndroidProject implements Project {
 		}
 	}
 	
-	private void triggerProjectStateSave() {
-		// TODO Auto-generated method stub
+	public void triggerProjectStateSave() {
+		processProjectForSave();
 		
 	}
 
@@ -116,9 +116,19 @@ public class AndroidProject implements Project {
 		}
 	}
 	
+	public void runProject()
+	{
+		//TODO:write run sequence
+	}
+	
 	private void processXMLForLoad()
 	{
 		//TODO:Create XML parsing
+	}
+	
+	private void processProjectForSave()
+	{
+		//TODO:Create XML saving
 	}
 	
 	/* (non-Javadoc)

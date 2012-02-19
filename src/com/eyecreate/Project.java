@@ -10,5 +10,9 @@ public interface Project {
 	public abstract List<File> getProjectFiles();
 
 	public abstract ProjectTypes getProjectType();
+	
+	public abstract void triggerProjectStateSave();
+	
+	public abstract void runProject();
 
 }
