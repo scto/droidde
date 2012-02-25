@@ -8,8 +8,17 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -172,9 +181,50 @@ public class AndroidProject implements Project {
 		return new File(finalPath);
 	}
 	
+	private String relativeFilePathFromFile(File f)
+	{
+		return f.getAbsolutePath().replace(projectDirFromPath(projectFile.getAbsolutePath()).getAbsolutePath(),"");
+	}
+	
 	private void processProjectForSave()
 	{
-		//TODO:Create XML saving
+		projectXML=dBuilder.newDocument();
+		Element root = projectXML.createElement("project");
+		root.setAttribute("name", projectName);
+		root.setAttribute("author", projectAuthor);
+		root.setAttribute("type", projectType.name());
+		projectXML.appendChild(root);
+		Element libs = projectXML.createElement("libs");
+		for(File f : projectLibs)
+		{
+			Element e = projectXML.createElement("file");
+			e.setAttribute("src",relativeFilePathFromFile(f));
+			libs.appendChild(e);
+		}
+		Element files = projectXML.createElement("source");
+		for(File f : projectFiles)
+		{
+			Element e = projectXML.createElement("file");
+			e.setAttribute("src",relativeFilePathFromFile(f));
+			files.appendChild(e);
+		}
+		writeXmlFile(projectXML, projectFile);
+	}
+	
+	private void writeXmlFile(Document doc, File filename) {
+	    try {
+	        // Prepare the DOM document for writing
+	        Source source = new DOMSource(doc);
+
+	        // Prepare the output file
+	        Result result = new StreamResult(filename);
+
+	        // Write the DOM document to the file
+	        Transformer xformer = TransformerFactory.newInstance().newTransformer();
+	        xformer.transform(source, result);
+	    } catch (TransformerConfigurationException e) {
+	    } catch (TransformerException e) {
+	    }
 	}
 	
 	/* (non-Javadoc)
