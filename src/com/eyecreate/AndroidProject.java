@@ -23,6 +23,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.app.Activity;
+import android.content.res.AssetManager;
 import android.util.Log;
 
 public class AndroidProject implements Project {
@@ -36,6 +38,7 @@ public class AndroidProject implements Project {
 	private String projectName;
 	private File projectFile;
 	private String projectAuthor = "";
+	private File mainProjectFile;
 	
 	//This class manages the project structure from the project XML and gives other classes information about the loaded project.
 	//In order to make error finding easier, pass a Directory, name, and type when you need a new project and the project.xml when you need it loaded.
@@ -129,9 +132,10 @@ public class AndroidProject implements Project {
 		}
 	}
 	
-	public void runProject()
+	public boolean runProject(Activity activity)
 	{
-		//TODO:write run sequence
+		AndroidRunner andRun = new AndroidRunner();
+		return andRun.runProject(this, activity);
 	}
 	
 	private void processXMLForLoad()
@@ -153,6 +157,7 @@ public class AndroidProject implements Project {
 		for(Node n : nodeList(sources.getChildNodes()))
 		{
 			if(n.getNodeName().toLowerCase().equals("file")) projectFiles.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+			if(n.getAttributes().getNamedItem("main") != null) mainProjectFile = new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent());
 		}
 	}
 	
@@ -206,6 +211,7 @@ public class AndroidProject implements Project {
 		{
 			Element e = projectXML.createElement("file");
 			e.setAttribute("src",relativeFilePathFromFile(f));
+			if(f.getAbsolutePath().equals(mainProjectFile.getAbsolutePath())) e.setAttribute("mainfile", "true");
 			files.appendChild(e);
 		}
 		writeXmlFile(projectXML, projectFile);
@@ -248,6 +254,21 @@ public class AndroidProject implements Project {
 	public ProjectTypes getProjectType()
 	{
 		return projectType;
+	}
+	
+	public File getProjectDir()
+	{
+		return new File(projectDirFromPath(projectFile.getAbsolutePath()).getAbsolutePath());
+	}
+	
+	public String getProjectName()
+	{
+		return projectName;
+	}
+	
+	public String getMainFile()
+	{
+		return mainProjectFile.getAbsolutePath();
 	}
 
 }

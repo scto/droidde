@@ -3,6 +3,9 @@ package com.eyecreate;
 import java.io.File;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.res.AssetManager;
+
 public interface Project {
 
 	public abstract boolean isValid();
@@ -11,8 +14,12 @@ public interface Project {
 
 	public abstract ProjectTypes getProjectType();
 	
+	public abstract String getProjectName();
+	
+	public abstract File getProjectDir();
+	
 	public abstract void triggerProjectStateSave();
 	
-	public abstract void runProject();
+	public abstract boolean runProject(Activity activity);
 
 }

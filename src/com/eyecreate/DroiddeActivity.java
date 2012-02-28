@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,10 +62,19 @@ public class DroiddeActivity extends Activity {
 	    		loadedProject.triggerProjectStateSave();
 	    		return true;
 	    	case R.id.run:
-	    		loadedProject.runProject();
+	    		if(!loadedProject.runProject(this)) Toast.makeText(getBaseContext(), "Project failed to run!", Toast.LENGTH_LONG);
 	    		return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
+    	}
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	if(requestCode == 42 && resultCode==RESULT_CANCELED)
+    	{
+    		Toast.makeText(getBaseContext(), "Problem while running/compiling.", Toast.LENGTH_LONG);
     	}
     }
 
