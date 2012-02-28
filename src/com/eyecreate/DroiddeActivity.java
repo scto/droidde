@@ -41,9 +41,9 @@ public class DroiddeActivity extends Activity {
         	throwInvalid();
         }
         loadedProject = null;
-        if(findProjectType(getIntent().getData().getPath()).equals("Android")) loadedProject = new AndroidProject(getIntent().getData().getPath());
-        if(loadedProject.isValid()) setUpProjectSpace(loadedProject);
-        if(!loadedProject.isValid()) findFaultAndNotify();
+        if(findProjectType(getIntent().getData().getPath()).equals(ProjectTypes.ANDROID.name())) loadedProject = new AndroidProject(getIntent().getData().getPath());
+        if(loadedProject != null && loadedProject.isValid()) setUpProjectSpace(loadedProject);
+        if(loadedProject == null || !loadedProject.isValid()) findFaultAndNotify();
         
     }
     

@@ -10,4 +10,6 @@
     <string name="project_location_hint">Click and browse to the desired project directory</string>
     <string name="saveproj">Save Project</string>
     <string name="runproj">Run Project</string>
+    <string name="create_project">Create</string>
+    <string name="file_browse">Browse</string>
 </resources>

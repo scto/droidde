@@ -3,6 +3,7 @@ package com.eyecreate;
 import java.io.File;
 import java.io.IOException;
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,8 +34,8 @@ public class AndroidProject implements Project {
 	private DocumentBuilder dBuilder = null;
 	private boolean isValid;
 	private ProjectTypes projectType = ProjectTypes.ANDROID;
-	private List<File> projectFiles;
-	private List<File> projectLibs;
+	private List<File> projectFiles = new ArrayList<File>();
+	private List<File> projectLibs = new ArrayList<File>();
 	private String projectName;
 	private File projectFile;
 	private String projectAuthor = "";
@@ -68,6 +69,12 @@ public class AndroidProject implements Project {
 	}
 	
 	public AndroidProject(String path, String name, String type) {
+		try {
+			dBuilder=DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		File projectDir=new File(path);
 		if(projectDir.isDirectory() && projectDir.list().length==0)
 		{
@@ -92,13 +99,13 @@ public class AndroidProject implements Project {
 		try{
 			projectType = ProjectTypes.valueOf(type.toUpperCase());
 			projectName = name;
-			projectFile = new File(filePath.getAbsolutePath()+File.pathSeparator+projectName+".xml");
+			projectFile = new File(filePath.getAbsolutePath()+File.separator+projectName+".xml");
 			createProjectFileList(filePath);
 			for(String s: projectType.getDefaultLibs()){
-				if(!(new File(filePath.getAbsolutePath()+File.pathSeparator+s).exists())){
-					Log.w("Droidde","File "+filePath.getAbsolutePath()+File.pathSeparator+s+" was not found. You might want to find out why this file wasn't found.");
+				if(!(new File(filePath.getAbsolutePath()+File.separator+s).exists())){
+					Log.w("Droidde","File "+filePath.getAbsolutePath()+File.separator+s+" was not found. You might want to find out why this file wasn't found.");
 				}
-				projectLibs.add(new File(filePath.getAbsolutePath()+File.pathSeparator+s));
+				projectLibs.add(new File(filePath.getAbsolutePath()+File.separator+s));
 			}
 			triggerProjectStateSave();
 		}
@@ -179,9 +186,9 @@ public class AndroidProject implements Project {
 	private File projectDirFromPath(String path)
 	{
 		String finalPath = "";
-		for(String s:path.split(File.pathSeparator))
+		for(String s:path.split(File.separator))
 		{
-			if(!s.toLowerCase().contains(".xml"))finalPath+=s+File.pathSeparator;
+			if(!s.toLowerCase().contains(".xml"))finalPath+=s+File.separator;
 		}
 		return new File(finalPath);
 	}

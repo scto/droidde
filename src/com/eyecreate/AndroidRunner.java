@@ -42,6 +42,7 @@ public class AndroidRunner implements ProjectRunner {
 		//Create intent and check for good return 
 		ComponentName cn = new ComponentName("com.t_arn.JavaIDEdroid","com.t_arn.JavaIDEdroid.MainActivity");
 		Intent intent = new Intent("android.intent.action.SEND");
+		intent.setComponent(cn);
 		intent.putExtra("android.intent.extra.ScriptPath", project.getProjectDir()+"/0_build.bsh");
 		intent.putExtra("android.intent.extra.ScriptAutoRun",true);
 		intent.putExtra("android.intent.extra.ScriptAutoExit", true);

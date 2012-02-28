@@ -31,12 +31,26 @@
         android:text="@string/project_location_label"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/projectDirectory"
-        android:layout_width="992dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:hint="@string/project_location_hint" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="1008dp"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/projectDirectory"
+            android:layout_width="992dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="1"
+            android:hint="@string/project_location_hint" />
+
+        <Button
+            android:id="@+id/fileBrowseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/file_browse" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/projectTypeLabel"
@@ -52,4 +66,11 @@
         android:layout_height="wrap_content"
         
     />
+
+    <Button
+        android:id="@+id/createButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_project" />
+
 </LinearLayout>

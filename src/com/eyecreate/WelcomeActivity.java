@@ -1,16 +1,24 @@
 package com.eyecreate;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WelcomeActivity extends Activity {
 	static final int DIALOG_NEW_PROJECT_ID = 0;
@@ -41,7 +49,7 @@ public class WelcomeActivity extends Activity {
     }
     protected Dialog onCreateDialog (int id)
     {
-    	Dialog dialog;
+    	final Dialog dialog;
     	switch(id)
     	{
     		//Define the New Project Dialog window
@@ -51,12 +59,23 @@ public class WelcomeActivity extends Activity {
     			dialog.setContentView(R.layout.projectdialog);
     			dialog.setTitle("New Project");
     			//Set up the spinner
-    			Spinner projectType = (Spinner)dialog.findViewById(R.id.projectType);
+    			final Spinner projectType = (Spinner)dialog.findViewById(R.id.projectType);
     			//Get every ProjectTypes object from the enumeration and input into String Array
     			ArrayList<String> projectTypeArrayList = new ArrayList<String>();
     			for(ProjectTypes p : ProjectTypes.values())
     				projectTypeArrayList.add(p.toString());
     			String [] projectTypeArray = projectTypeArrayList.toArray(new String[projectTypeArrayList.size()]);
+    			//connect buttons
+    			Button create = (Button)dialog.findViewById(R.id.createButton);
+    			create.setOnClickListener(new View.OnClickListener() {
+					
+					public void onClick(View v) {
+						dialog.cancel();
+						createNewProject(ProjectTypes.valueOf((String) projectType.getSelectedItem()), ((EditText)dialog.findViewById(R.id.projectName)).getText().toString(), ((EditText)dialog.findViewById(R.id.projectDirectory)).getText().toString());
+						
+						
+					}
+				});
     			//Initialize adapter
     			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,
     					projectTypeArray);
@@ -82,5 +101,24 @@ public class WelcomeActivity extends Activity {
     public void showNewProjectDialog()
     {
     	showDialog(DIALOG_NEW_PROJECT_ID);
+    }
+    
+    private void createNewProject(ProjectTypes type,String name, String path)
+    {
+    	if(type.equals(ProjectTypes.ANDROID))
+    	{
+    		AndroidProject ap = new AndroidProject(path,name,type.name());
+    		if(ap.isValid())
+    		{
+    			ComponentName cn = new ComponentName("com.eyecreate","com.eyecreate.DroiddeActivity");
+    			Intent intent = new Intent("android.intent.action.VIEW");
+    			intent.setComponent(cn);
+    			intent.setData(Uri.parse("file://"+path+File.separator+name+".xml"));
+    			startActivity(intent);
+    		}
+    		else{
+    			Toast.makeText(getBaseContext(), "Project Creation went wrong.", Toast.LENGTH_LONG);
+    		}
+    	}
     }
 }
