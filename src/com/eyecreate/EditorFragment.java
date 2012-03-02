@@ -103,6 +103,7 @@ public class EditorFragment extends Fragment {
 	 @Override
 	 public void onResume() {
 		 super.onResume();
+		 getActivity().setContentView(R.layout.editor);
 		 File extStorage = Environment.getExternalStorageDirectory();
 		 File confDir = new File(extStorage,"droidde-config");
 		 File configFile = new File(confDir,"syntax.xml");

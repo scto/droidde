@@ -28,6 +28,7 @@ public class ProjectFilesFragment extends Fragment {
 	 
 	 public void AddFilesToList(List<File> files)
 	 {
+		 getActivity().setContentView(R.layout.projectfiles);
 		 ListView lv = (ListView) getActivity().findViewById(R.id.filelist);
 		 fileList = files;
 		 List<String> values = new ArrayList<String>();

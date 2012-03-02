@@ -88,7 +88,7 @@ public class DroiddeActivity extends Activity {
 		// TODO Auto-generated method stub
 		//Check if some specific files are missing and notify. This might be a good idea to put into a Project subclass in the future.
 		fragman=getFragmentManager();
-		ProjectFilesFragment projFiles = (ProjectFilesFragment) fragman.findFragmentById(R.layout.projectfiles);
+		ProjectFilesFragment projFiles = (ProjectFilesFragment) fragman.findFragmentById(R.id.projectfiles);
 		for(File f : loadedProject.getProjectFiles())
 		{
 			if(loadedProject.getProjectType().equals(ProjectTypes.ANDROID)){

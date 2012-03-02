@@ -157,14 +157,18 @@ public class AndroidProject implements Project {
 			if(n.getNodeName().toLowerCase().equals("libs")) libs = n;
 			if(n.getNodeName().toLowerCase().equals("source")) sources = n;
 		}
-		for(Node n : nodeList(libs.getChildNodes()))
-		{
-			if(n.getNodeName().toLowerCase().equals("file")) projectLibs.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+		if(libs != null){
+			for(Node n : nodeList(libs.getChildNodes()))
+			{
+				if(n.getNodeName().toLowerCase().equals("file")) projectLibs.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+			}
 		}
-		for(Node n : nodeList(sources.getChildNodes()))
-		{
-			if(n.getNodeName().toLowerCase().equals("file")) projectFiles.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
-			if(n.getAttributes().getNamedItem("main") != null) mainProjectFile = new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent());
+		if(sources != null){
+			for(Node n : nodeList(sources.getChildNodes()))
+			{
+				if(n.getNodeName().toLowerCase().equals("file")) projectFiles.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
+				if(n.getAttributes().getNamedItem("main") != null) mainProjectFile = new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent());
+			}
 		}
 	}
 	
