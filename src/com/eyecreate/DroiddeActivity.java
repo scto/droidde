@@ -159,4 +159,8 @@ public class DroiddeActivity extends Activity {
 		}
 		return "";
 	}
+	
+	public void setProjectMainFile(File file){
+		loadedProject.setMainProjectFile(file);
+	}
 }

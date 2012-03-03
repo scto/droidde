@@ -21,5 +21,7 @@ public interface Project {
 	public abstract void triggerProjectStateSave();
 	
 	public abstract boolean runProject(Activity activity);
+	
+	public abstract void setMainProjectFile(File f);
 
 }

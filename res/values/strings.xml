@@ -12,4 +12,5 @@
     <string name="runproj">Run Project</string>
     <string name="create_project">Create</string>
     <string name="file_browse">Browse</string>
+    <string name="savefile">Save File</string>
 </resources>

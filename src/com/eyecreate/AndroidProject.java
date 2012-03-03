@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -81,6 +82,12 @@ public class AndroidProject implements Project {
 			createProject(new File(path),name,type);
 			isValid=true;
 		}
+		//this part is needed to allow "importing" existing project
+		else if(projectDir.isDirectory() && projectDir.list().length!=0 && Arrays.asList(projectDir.list()).contains("AndroidManifest.xml"))
+		{
+			createProject(new File(path),name,type);
+			isValid=true;
+		}
 		else
 		{
 			Log.e("Droidde","Project directory is not empty. Must be empty in order to start a new project.");
@@ -133,7 +140,7 @@ public class AndroidProject implements Project {
 			if(f.isDirectory()){
 				recursiveDirectorySearch(f);
 			}
-			if(f.isFile() && projectType.isAcceptedFile(f.getName().split(".")[1])){
+			if(f.isFile() && projectType.isAcceptedFile(f.getName().split("\\.")[1])){
 				projectFiles.add(f);
 			}
 		}
@@ -222,7 +229,8 @@ public class AndroidProject implements Project {
 		{
 			Element e = projectXML.createElement("file");
 			e.setAttribute("src",relativeFilePathFromFile(f));
-			if(f.getAbsolutePath().equals(mainProjectFile.getAbsolutePath())) e.setAttribute("mainfile", "true");
+			//TODO: find way to set mainproject file outside loading.
+			if(mainProjectFile != null && f.getAbsolutePath().equals(mainProjectFile.getAbsolutePath())) e.setAttribute("mainfile", "true");
 			files.appendChild(e);
 		}
 		writeXmlFile(projectXML, projectFile);
@@ -280,6 +288,11 @@ public class AndroidProject implements Project {
 	public String getMainFile()
 	{
 		return mainProjectFile.getAbsolutePath();
+	}
+	
+	public void setMainProjectFile(File f)
+	{
+		mainProjectFile=f;
 	}
 
 }

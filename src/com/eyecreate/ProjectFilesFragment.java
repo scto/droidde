@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,6 +33,7 @@ public class ProjectFilesFragment extends Fragment {
 	 {
 		 getActivity().setContentView(R.layout.projectfiles);
 		 ListView lv = (ListView) getActivity().findViewById(R.id.filelist);
+		 lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		 fileList = files;
 		 List<String> values = new ArrayList<String>();
 		 for(File f : fileList){
@@ -44,6 +48,19 @@ public class ProjectFilesFragment extends Fragment {
 				requestOpenFile(fileList.get(position));
 			}
 		    };
+		 final OnItemLongClickListener longListener = new OnItemLongClickListener() {
+			 public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) 
+			 {
+				 
+				 for(int i=0;i<av.getCount();i++){
+					 ((ListView)av).setItemChecked(i, false);
+				 }
+				 ((ListView)av).setItemChecked(pos, true);
+				 ((DroiddeActivity)getActivity()).setProjectMainFile(fileList.get(pos));
+				 return true;
+			 }
+		};
+		lv.setOnItemLongClickListener(longListener);
 		lv.setOnItemClickListener(newListener);
 
 	 }

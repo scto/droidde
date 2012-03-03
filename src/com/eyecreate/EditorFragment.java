@@ -21,17 +21,40 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditorFragment extends Fragment {
 
-	 @Override
+	private File openedFile; 
+	@Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                             Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
+		 setHasOptionsMenu(true);
 	        return inflater.inflate(R.layout.editor, container, false);
+	    }
+	 
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	        MenuInflater inflater = getActivity().getMenuInflater();
+	        inflater.inflate(R.menu.editormenu, menu);
+	        return true;
+	 }
+	 
+	 public boolean onOptionsItemSelected(MenuItem item) {
+	    	switch(item.getItemId())
+	    	{
+		    	case R.id.savefile:
+		    		if(openedFile != null) saveFile(openedFile);
+		    		return true;
+		        default:
+		            return super.onOptionsItemSelected(item);
+	    	}
 	    }
 	 
 	 @Override
@@ -77,6 +100,7 @@ public class EditorFragment extends Fragment {
 	 
 	 public void openFile(File f)
 	 {
+		 openedFile = f;
 		 RichEditText ret = (RichEditText) getActivity().findViewById(R.id.editorcontent);
 		 try {
 			ret.setText(FileUtils.readFileToString(f));
