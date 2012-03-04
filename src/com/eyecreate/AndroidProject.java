@@ -174,7 +174,7 @@ public class AndroidProject implements Project {
 			for(Node n : nodeList(sources.getChildNodes()))
 			{
 				if(n.getNodeName().toLowerCase().equals("file")) projectFiles.add(new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent()));
-				if(n.getAttributes().getNamedItem("main") != null) mainProjectFile = new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent());
+				if(n.getAttributes().getNamedItem("mainfile") != null) mainProjectFile = new File(projectDirFromPath(projectFile.getAbsolutePath())+n.getAttributes().getNamedItem("src").getTextContent());
 			}
 		}
 	}

@@ -45,8 +45,6 @@ public class ProjectFilesFragment extends Fragment {
 		 else {
 			 //
 		 }
-		 //make sure things are loaded if triggered too early
-		 //if(fileList != null) AddFilesToList(fileList);
 		 super.onActivityCreated(bundle);
 	 }
 	 
@@ -56,9 +54,20 @@ public class ProjectFilesFragment extends Fragment {
 		 List<String> values = new ArrayList<String>();
 		 for(File f : fileList){
 			 values.add(f.getName());
-			 if(((DroiddeActivity)getActivity()).getProjectMainFile() != null && ((DroiddeActivity)getActivity()).getProjectMainFile().getName().equals(f.getName())) lv.setItemChecked(values.size()-1, true);
 		 }
-		 lv.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,values));
+		 lv.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,values){
+			 @Override
+			 public View getView(int position, View convertView, ViewGroup parent) {
+			     View v = super.getView(position, convertView, parent);
+			     if (((DroiddeActivity)getActivity()).getProjectMainFile() != null && ((DroiddeActivity)getActivity()).getProjectMainFile().getName().equals(((TextView)v).getText())) {
+			         v.setBackgroundColor(Color.DKGRAY);
+			     }
+			     else{
+			    	 v.setBackgroundColor(color.background_dark);
+			     }
+			     return v;
+			 }
+		 });
 		 //This part creates the listener for list clicks
 		 final OnItemClickListener newListener = new OnItemClickListener() {
 
