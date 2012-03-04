@@ -59,6 +59,7 @@ public class RichEditText extends EditText {
 	}
 	
 	private void UpdateSyntax() {
+		if(!currentLang.equals("")){
 		Spannable erasespan=this.getText();
 		Object[] spans = this.getText().getSpans(0, this.getText().length(), UpdateAppearance.class);
 		for(int i = 0; i<spans.length;i++){
@@ -94,6 +95,7 @@ public class RichEditText extends EditText {
 			}
 			sp.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC), m3.toMatchResult().start(), m3.toMatchResult().end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 			sp.setSpan(new ForegroundColorSpan(android.graphics.Color.rgb(63, 127, 95)), m3.toMatchResult().start(), m3.toMatchResult().end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
 		}
 	}
 	

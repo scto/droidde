@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.color;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -19,6 +21,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class ProjectFilesFragment extends Fragment {
 
@@ -48,7 +52,6 @@ public class ProjectFilesFragment extends Fragment {
 	 
 	 public void AddFilesToList(List<File> files)
 	 {
-		 lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		 fileList = files;
 		 List<String> values = new ArrayList<String>();
 		 for(File f : fileList){
@@ -69,10 +72,11 @@ public class ProjectFilesFragment extends Fragment {
 			 {
 				 
 				 for(int i=0;i<av.getCount();i++){
-					 ((ListView)av).setItemChecked(i, false);
+					 lv.getChildAt(i).setBackgroundColor(color.background_dark);
 				 }
-				 ((ListView)av).setItemChecked(pos, true);
+				 lv.getChildAt(pos).setBackgroundColor(Color.DKGRAY);
 				 ((DroiddeActivity)getActivity()).setProjectMainFile(fileList.get(pos));
+				 Toast.makeText(getActivity().getApplicationContext(), "Changed main file.", Toast.LENGTH_SHORT).show();
 				 return true;
 			 }
 		};

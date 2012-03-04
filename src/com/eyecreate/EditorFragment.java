@@ -108,7 +108,7 @@ public class EditorFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 ret.setCurrentLangFromExt(f.getName().split(".")[f.getName().split(".").length-1]);
+		 ret.setCurrentLangFromExt(f.getName().split("\\.")[f.getName().split("\\.").length-1]);
 
 	 }
 	 
@@ -127,7 +127,7 @@ public class EditorFragment extends Fragment {
 	 @Override
 	 public void onResume() {
 		 super.onResume();
-		 getActivity().setContentView(R.layout.editor);
+		 //getView().setContentView(R.layout.editor);
 		 File extStorage = Environment.getExternalStorageDirectory();
 		 File confDir = new File(extStorage,"droidde-config");
 		 File configFile = new File(confDir,"syntax.xml");
