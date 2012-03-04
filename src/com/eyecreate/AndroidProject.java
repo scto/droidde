@@ -294,5 +294,16 @@ public class AndroidProject implements Project {
 	{
 		mainProjectFile=f;
 	}
+	
+	public void addNewFileToProject(File file)
+	{
+		if(!projectFiles.contains(file)) projectFiles.add(file);
+		triggerProjectStateSave();
+	}
+	
+	public File getMainProjectFile()
+	{
+		return mainProjectFile;
+	}
 
 }

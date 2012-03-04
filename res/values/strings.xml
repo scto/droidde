@@ -13,4 +13,9 @@
     <string name="create_project">Create</string>
     <string name="file_browse">Browse</string>
     <string name="savefile">Save File</string>
+    <string name="addfile">Add File</string>
+    <string name="newfilename">New Filename</string>
+    <string name="pickfiletype">Filetype</string>
+    <string name="new_file_location">Location to Put File</string>
+    <string name="create_file">Create</string>
 </resources>

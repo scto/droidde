@@ -18,10 +18,14 @@ public interface Project {
 	
 	public abstract File getProjectDir();
 	
+	public abstract File getMainProjectFile();
+	
 	public abstract void triggerProjectStateSave();
 	
 	public abstract boolean runProject(Activity activity);
 	
 	public abstract void setMainProjectFile(File f);
+	
+	public abstract void addNewFileToProject(File f);
 
 }

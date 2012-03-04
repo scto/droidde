@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,18 +27,36 @@ public class ProjectFilesFragment extends Fragment {
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                             Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
-	        return inflater.inflate(R.layout.projectfiles, container, false);
+	    View v = inflater.inflate(R.layout.projectfiles, container, false);    
+	    return v;
 	    }
+	
+	@Override
+	 public void onActivityCreated(Bundle bundle) {
+		 if(bundle != null) {
+			 //Put stuff here if getting a present!
+		 }
+		 else {
+			 //
+		 }
+		 //make sure things are loaded if triggered too early
+		 if(fileList != null) AddFilesToList(fileList);
+		 super.onActivityCreated(bundle);
+	 }
 	 
 	 public void AddFilesToList(List<File> files)
 	 {
-		 getActivity().setContentView(R.layout.projectfiles);
-		 ListView lv = (ListView) getActivity().findViewById(R.id.filelist);
+		 ListView lv = (ListView) getView().findViewById(R.id.filelist);
+		 if(lv==null) {
+			 fileList=files;
+			 return;
+		 }
 		 lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		 fileList = files;
 		 List<String> values = new ArrayList<String>();
 		 for(File f : fileList){
 			 values.add(f.getName());
+			 if(((DroiddeActivity)getActivity()).getProjectMainFile() != null && ((DroiddeActivity)getActivity()).getProjectMainFile().getName().equals(f.getName())) lv.setItemChecked(values.size()-1, true);
 		 }
 		 lv.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,values));
 		 //This part creates the listener for list clicks

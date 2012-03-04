@@ -24,4 +24,8 @@ public enum ProjectTypes {
 	public List<String> getDefaultLibs(){
 		return defaultLibs;
 	}
+	
+	public List<String> getAcceptedFileTypes(){
+		return acceptableTypes;
+	}
 }
