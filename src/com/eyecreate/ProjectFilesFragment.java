@@ -23,11 +23,13 @@ import android.widget.ListView;
 public class ProjectFilesFragment extends Fragment {
 
 	List<File> fileList; 
+	ListView lv;
 	@Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                             Bundle savedInstanceState) {
 	        // Inflate the layout for this fragment
-	    View v = inflater.inflate(R.layout.projectfiles, container, false);    
+	    View v = inflater.inflate(R.layout.projectfiles, container, false); 
+	    lv = (ListView) v.findViewById(R.id.filelist);
 	    return v;
 	    }
 	
@@ -40,17 +42,12 @@ public class ProjectFilesFragment extends Fragment {
 			 //
 		 }
 		 //make sure things are loaded if triggered too early
-		 if(fileList != null) AddFilesToList(fileList);
+		 //if(fileList != null) AddFilesToList(fileList);
 		 super.onActivityCreated(bundle);
 	 }
 	 
 	 public void AddFilesToList(List<File> files)
 	 {
-		 ListView lv = (ListView) getView().findViewById(R.id.filelist);
-		 if(lv==null) {
-			 fileList=files;
-			 return;
-		 }
 		 lv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		 fileList = files;
 		 List<String> values = new ArrayList<String>();

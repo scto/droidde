@@ -140,7 +140,7 @@ public class AndroidProject implements Project {
 			if(f.isDirectory()){
 				recursiveDirectorySearch(f);
 			}
-			if(f.isFile() && projectType.isAcceptedFile(f.getName().split("\\.")[1])){
+			if(f.isFile() && projectType.isAcceptedFile(f.getName().split("\\.")[f.getName().split("\\.").length-1])){
 				projectFiles.add(f);
 			}
 		}
@@ -216,7 +216,6 @@ public class AndroidProject implements Project {
 		root.setAttribute("name", projectName);
 		root.setAttribute("author", projectAuthor);
 		root.setAttribute("type", projectType.name());
-		projectXML.appendChild(root);
 		Element libs = projectXML.createElement("libs");
 		for(File f : projectLibs)
 		{
@@ -233,6 +232,9 @@ public class AndroidProject implements Project {
 			if(mainProjectFile != null && f.getAbsolutePath().equals(mainProjectFile.getAbsolutePath())) e.setAttribute("mainfile", "true");
 			files.appendChild(e);
 		}
+		root.appendChild(libs);
+		root.appendChild(files);
+		projectXML.appendChild(root);
 		writeXmlFile(projectXML, projectFile);
 	}
 	
