@@ -38,10 +38,31 @@ public class AndroidRunner implements ProjectRunner {
 			{
 				bootlibs+=f.getAbsolutePath()+":";
 			}
+			String sourcefiles = "";
+			for(File f : localProject.getProjectFiles())
+			{
+				if(f.getName().toLowerCase().endsWith(".java")) sourcefiles+=f.getAbsolutePath()+" ";
+			}
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("-bootclasspath \"+stSourcePath+\"android.jar","-bootclasspath "+bootlibs));
+			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("stSourcePath+stJavafile",sourcefiles));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("stJavafile = \"src/com/t_arn/HelloAndroid/\";", "stJavafile = \""+getMainFile(project)+"\";"));
+			String extLibs = "";
+			String extLibsApk = "";
+			if(localProject.getProjectLibs().size()>1)
+			{
+				for(File f: localProject.getProjectLibs())
+				{
+					if(!f.getName().toLowerCase().equals("android.jar"))
+					{
+						extLibs+=f.getAbsolutePath()+" ";
+						extLibsApk+="-rj "+f.getAbsolutePath()+" ";
+					}
+				}
+			}
+			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/3_dx.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/3_dx.bsh")).replace("// args += \" \"+stSourcePath+\"libs\\*.jar\";", "args += \" "+extLibs+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/3_dx.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/3_dx.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
+			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/4_apkbuilder.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/4_apkbuilder.bsh")).replace("// args += \" -rj \"+stSourcePath+\"libs\";", "args += \" "+extLibsApk+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/4_apkbuilder.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/4_apkbuilder.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/5_signjar.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/5_signjar.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
 		} catch (IOException e) {

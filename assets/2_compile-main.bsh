@@ -21,7 +21,7 @@ args += " -bootclasspath "+stSourcePath+"android.jar";
 args += " -classpath "+stSourcePath+"src";
 args +=":"+stSourcePath+"gen";
 args += " -d "+stSourcePath+"out/"+name;
-args += " "+stSourcePath+stJavafile;
+args += " "+"stSourcePath+stJavafile";
 iResult = G.ide.fnCompile(args);
 
 if (iResult==0) G.bshTask.fnToast("Compilation succeeded!",10000); 
