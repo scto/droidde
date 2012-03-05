@@ -143,7 +143,7 @@ public class AndroidProject implements Project {
 				recursiveDirectorySearch(f);
 			}
 			if(f.isFile() && projectType.isAcceptedFile(f.getName().split("\\.")[f.getName().split("\\.").length-1])){
-				projectFiles.add(f);
+				if(!f.getName().toLowerCase().equals("R.java")) projectFiles.add(f);
 			}
 		}
 	}
