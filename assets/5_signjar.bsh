@@ -9,7 +9,7 @@ stScriptPath = dirname(pathToFile(getSourceFileInfo()).getAbsolutePath())+"/";
 stScriptPath=stScriptPath.replace('\\','/'); 
 
 name = "HelloAndroid";
-outdir=stScriptPath+"out/test/"+name;
+outdir=stScriptPath+"out/"+name;
 print("***** Calling ZipSigner ...");
 G.bshTask.fnPublishProgress("Running ZipSigner...");
 

@@ -17,10 +17,10 @@ G.bshTask.fnPublishProgress("Compiling...");
 // mainActivity.bshTask.fnClear();
 
 args = "-verbose -deprecation -extdirs \"\" -1.5";
-args += " -bootclasspath /mnt/sdcard/!Programme/win32/Programs/android-sdk/platforms/android-8/android.jar";
+args += " -bootclasspath "+stSourcePath+"android.jar";
 args += " -classpath "+stSourcePath+"src";
 args +=":"+stSourcePath+"gen";
-args += " -d "+stSourcePath+"out/test/"+name;
+args += " -d "+stSourcePath+"out/"+name;
 args += " "+stSourcePath+stJavafile;
 iResult = G.ide.fnCompile(args);
 

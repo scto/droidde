@@ -10,7 +10,7 @@ stScriptPath=stScriptPath.replace('\\','/');
 
 name = "HelloAndroid";
 
-outdir=stScriptPath+"out/test/"+name;
+outdir=stScriptPath+"out/"+name;
     
 print("***** Calling dx ...");
 G.bshTask.fnPublishProgress("Running dx...");
