@@ -108,7 +108,7 @@ public class AndroidProject implements Project {
 		try{
 			projectType = ProjectTypes.valueOf(type.toUpperCase());
 			projectName = name;
-			projectFile = new File(filePath.getAbsolutePath()+File.separator+projectName+".xml");
+			projectFile = new File(filePath.getAbsolutePath()+File.separator+projectName+".dpj");
 			createProjectFileList(filePath);
 			for(String s: projectType.getDefaultLibs()){
 				if(!(new File(filePath.getAbsolutePath()+File.separator+s).exists())){
@@ -205,7 +205,7 @@ public class AndroidProject implements Project {
 		String finalPath = "";
 		for(String s:path.split(File.separator))
 		{
-			if(!s.toLowerCase().contains(".xml"))finalPath+=s+File.separator;
+			if(!s.toLowerCase().contains(".dpj"))finalPath+=s+File.separator;
 		}
 		return new File(finalPath);
 	}
