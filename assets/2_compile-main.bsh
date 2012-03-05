@@ -12,7 +12,7 @@ name = "HelloAndroid";
 stJavafile = "src/com/t_arn/HelloAndroid/";
 
 System.out.println("***** Compiling "+stJavafile+" ...");
-mainActivity.bshTask.fnPublishProgress("Compiling...");
+G.bshTask.fnPublishProgress("Compiling...");
 
 // mainActivity.bshTask.fnClear();
 
@@ -22,7 +22,7 @@ args += " -classpath "+stSourcePath+"src";
 args +=":"+stSourcePath+"gen";
 args += " -d "+stSourcePath+"out/test/"+name;
 args += " "+stSourcePath+stJavafile;
-iResult = mainActivity.ide.fnCompile(args);
+iResult = G.ide.fnCompile(args);
 
-if (iResult==0) mainActivity.bshTask.fnToast("Compilation succeeded!",10000); 
-else mainActivity.bshTask.fnToast("Compilation failed!",10000);
+if (iResult==0) G.bshTask.fnToast("Compilation succeeded!",10000); 
+else G.bshTask.fnToast("Compilation failed!",10000);

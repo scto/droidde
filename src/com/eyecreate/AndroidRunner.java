@@ -16,9 +16,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class AndroidRunner implements ProjectRunner {
+	
+	Project localProject;
 
 	public boolean runProject(Project project,Activity activity) {
 		AssetManager assetM = activity.getAssets();
+		localProject = project;
 		//Copy assets to project folder
 		copyFile(assetM,"0_build.bsh",project.getProjectDir()+"/0_build.bsh");
 		copyFile(assetM,"1_aapt.bsh",project.getProjectDir()+"/1_aapt.bsh");
@@ -45,13 +48,16 @@ public class AndroidRunner implements ProjectRunner {
 		intent.setComponent(cn);
 		intent.putExtra("android.intent.extra.ScriptPath", project.getProjectDir()+"/0_build.bsh");
 		intent.putExtra("android.intent.extra.ScriptAutoRun",true);
-		intent.putExtra("android.intent.extra.ScriptAutoExit", true);
+		//intent.putExtra("android.intent.extra.ScriptAutoExit", true);
 		activity.startActivityForResult(intent, 42);
 		//later decide what to do with return values
-		//remove scripts
-		removeScripts(project);
-		Toast.makeText(activity.getBaseContext(),"Android .apk should be made. Check project out directory.", Toast.LENGTH_LONG);
 		return true;
+	}
+	
+	public void handleRunResult(Intent data)
+	{
+		//remove scripts
+		removeScripts(localProject);
 	}
 	
 	private void removeScripts(Project project)

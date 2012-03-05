@@ -11,13 +11,13 @@ stScriptPath=stScriptPath.replace('\\','/');
 name = "HelloAndroid";
 outdir=stScriptPath+"out/test/"+name;
 print("***** Calling ZipSigner ...");
-mainActivity.bshTask.fnPublishProgress("Running ZipSigner...");
+G.bshTask.fnPublishProgress("Running ZipSigner...");
 
 args =  "-M testkey";
 args += " -I "+outdir+"/"+name+".apk.unsigned";
 args += " -O "+outdir+"/"+name+".apk";
-iResult = mainActivity.ide.fnSignApk(args);
+iResult = G.ide.fnSignApk(args);
 System.out.println("iResult = "+iResult);
 
-if (iResult==0) mainActivity.bshTask.fnToast("Signing succeeded!",10000);
-else mainActivity.bshTask.fnToast("Signing failed!",10000);
+if (iResult==0) G.bshTask.fnToast("Signing succeeded!",10000);
+else G.bshTask.fnToast("Signing failed!",10000);

@@ -7,13 +7,13 @@ stSourcePath = stSourcePath.replace('\\','/');
 name = "HelloAndroid";
 
 System.out.println("***** Running Aapt  ...");
-mainActivity.bshTask.fnPublishProgress("Aapt...");
+G.bshTask.fnPublishProgress("Aapt...");
 
 // mainActivity.bshTask.fnClear();
 
-args = "p -m -J gen -M AndroidManifest.xml -S res -I android.jar -f -F "+stSourcePath+"out/test/"+name+"/"+name+".apk.res";
-iResult = mainActivity.ide.fnAapt(args);
+args = "p -m -J "+stSourcePath+"gen -M "+stSourcePath+"AndroidManifest.xml -S "+stSourcePath+"res -I "+stSourcePath+"android.jar -f -F "+stSourcePath+"out/test/"+name+"/"+name+".apk.res";
+iResult = G.ide.fnAapt(args);
 
-if (iResult==0) mainActivity.bshTask.fnToast("aapt succeeded!",10000); 
-else mainActivity.bshTask.fnToast("aapt failed!",10000);
+if (iResult==0) G.bshTask.fnToast("aapt succeeded!",10000); 
+else G.bshTask.fnToast("aapt failed!",10000);
 

@@ -13,12 +13,12 @@ name = "HelloAndroid";
 outdir=stScriptPath+"out/test/"+name;
     
 print("***** Calling dx ...");
-mainActivity.bshTask.fnPublishProgress("Running dx...");
+G.bshTask.fnPublishProgress("Running dx...");
 
 args =  "--dex --output="+outdir+"/classes.dex";
 args += " "+outdir;
 // args += " "+stSourcePath+"libs\*.jar";
-iResult = mainActivity.ide.fnDx(args);
+iResult = G.ide.fnDx(args);
 
-if (iResult==0) mainActivity.bshTask.fnToast("dx succeeded!",10000);
-else mainActivity.bshTask.fnToast("dx failed!",10000);
+if (iResult==0) G.bshTask.fnToast("dx succeeded!",10000);
+else G.bshTask.fnToast("dx failed!",10000);

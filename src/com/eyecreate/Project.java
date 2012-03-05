@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 
 public interface Project {
@@ -23,6 +24,8 @@ public interface Project {
 	public abstract void triggerProjectStateSave();
 	
 	public abstract boolean runProject(Activity activity);
+	
+	public abstract void handleRunResult(Intent data); 
 	
 	public abstract void setMainProjectFile(File f);
 	

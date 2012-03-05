@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.util.Log;
 
@@ -37,6 +38,7 @@ public class AndroidProject implements Project {
 	private ProjectTypes projectType = ProjectTypes.ANDROID;
 	private List<File> projectFiles = new ArrayList<File>();
 	private List<File> projectLibs = new ArrayList<File>();
+	AndroidRunner andRun = new AndroidRunner();
 	private String projectName;
 	private File projectFile;
 	private String projectAuthor = "";
@@ -148,8 +150,12 @@ public class AndroidProject implements Project {
 	
 	public boolean runProject(Activity activity)
 	{
-		AndroidRunner andRun = new AndroidRunner();
 		return andRun.runProject(this, activity);
+	}
+	
+	public void handleRunResult(Intent data)
+	{
+		andRun.handleRunResult(data);
 	}
 	
 	private void processXMLForLoad()

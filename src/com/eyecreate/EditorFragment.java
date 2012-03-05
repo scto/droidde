@@ -40,10 +40,8 @@ public class EditorFragment extends Fragment {
 	        return inflater.inflate(R.layout.editor, container, false);
 	    }
 	 
-	 public boolean onCreateOptionsMenu(Menu menu) {
-	        MenuInflater inflater = getActivity().getMenuInflater();
+	 public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
 	        inflater.inflate(R.menu.editormenu, menu);
-	        return true;
 	 }
 	 
 	 public boolean onOptionsItemSelected(MenuItem item) {

@@ -143,6 +143,10 @@ public class DroiddeActivity extends Activity {
     	{
     		Toast.makeText(getBaseContext(), "Problem while running/compiling.", Toast.LENGTH_LONG);
     	}
+    	if(requestCode == 42 && resultCode == RESULT_OK)
+    	{
+    		loadedProject.handleRunResult(data);
+    	}
     }
 
 	private void findFaultAndNotify() {
