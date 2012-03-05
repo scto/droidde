@@ -12,6 +12,8 @@ public interface Project {
 	public abstract boolean isValid();
 
 	public abstract List<File> getProjectFiles();
+	
+	public abstract List<File> getProjectLibs();
 
 	public abstract ProjectTypes getProjectType();
 	

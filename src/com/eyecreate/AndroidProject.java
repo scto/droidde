@@ -45,7 +45,7 @@ public class AndroidProject implements Project {
 	private File mainProjectFile;
 	
 	//This class manages the project structure from the project XML and gives other classes information about the loaded project.
-	//In order to make error finding easier, pass a Directory, name, and type when you need a new project and the project.xml when you need it loaded.
+	//In order to make error finding easier, pass a Directory, name, and type when you need a new project and the project.dpj when you need it loaded.
 	public AndroidProject(String path) {
 		initialSanityChecks(path);
 		try {
@@ -273,6 +273,11 @@ public class AndroidProject implements Project {
 	public List<File> getProjectFiles()
 	{
 		return projectFiles;
+	}
+	
+	public List<File> getProjectLibs()
+	{
+		return projectLibs;
 	}
 	
 	/* (non-Javadoc)

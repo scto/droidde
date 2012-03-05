@@ -113,7 +113,7 @@ public class WelcomeActivity extends Activity {
     			ComponentName cn = new ComponentName("com.eyecreate","com.eyecreate.DroiddeActivity");
     			Intent intent = new Intent("android.intent.action.VIEW");
     			intent.setComponent(cn);
-    			intent.setData(Uri.parse("file://"+path+File.separator+name+".xml"));
+    			intent.setData(Uri.parse("file://"+path+File.separator+name+".dpj"));
     			startActivity(intent);
     		}
     		else{

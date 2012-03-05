@@ -80,10 +80,7 @@ public class ProjectFilesFragment extends Fragment {
 			 public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) 
 			 {
 				 
-				 for(int i=0;i<av.getCount();i++){
-					 lv.getChildAt(i).setBackgroundColor(color.background_dark);
-				 }
-				 lv.getChildAt(pos).setBackgroundColor(Color.DKGRAY);
+				 lv.invalidateViews();
 				 ((DroiddeActivity)getActivity()).setProjectMainFile(fileList.get(pos));
 				 Toast.makeText(getActivity().getApplicationContext(), "Changed main file.", Toast.LENGTH_SHORT).show();
 				 return true;
