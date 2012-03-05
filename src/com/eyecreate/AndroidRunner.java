@@ -32,6 +32,7 @@ public class AndroidRunner implements ProjectRunner {
 		//Rewrite scripts to use correct project values
 		try {
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/1_aapt.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/1_aapt.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
+			if(!(new File(project.getProjectDir()+File.separator+"assets").exists())) FileUtils.writeStringToFile(new File(project.getProjectDir()+"/1_aapt.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/1_aapt.bsh")).replace("-A \"+stSourcePath+\"assets", ""));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/2_compile-main.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/2_compile-main.bsh")).replace("stJavafile = \"src/com/t_arn/HelloAndroid/\";", "stJavafile = \""+getMainFile(project)+"\";"));
 			FileUtils.writeStringToFile(new File(project.getProjectDir()+"/3_dx.bsh"), FileUtils.readFileToString(new File(project.getProjectDir()+"/3_dx.bsh")).replace("name = \"HelloAndroid\";", "name = \""+project.getProjectName()+"\";"));
