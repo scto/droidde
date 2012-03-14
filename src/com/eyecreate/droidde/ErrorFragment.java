@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

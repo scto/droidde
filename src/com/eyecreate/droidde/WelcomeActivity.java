@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import java.io.File;
 import java.io.IOException;
@@ -140,7 +140,7 @@ public class WelcomeActivity extends Activity {
     		AndroidProject ap = new AndroidProject(path,name,type.name());
     		if(ap.isValid())
     		{
-    			ComponentName cn = new ComponentName("com.eyecreate","com.eyecreate.DroiddeActivity");
+    			ComponentName cn = new ComponentName("com.eyecreate","com.eyecreate.droidde.DroiddeActivity");
     			Intent intent = new Intent("android.intent.action.VIEW");
     			intent.setComponent(cn);
     			intent.setData(Uri.parse("file://"+path+File.separator+name+".dpj"));

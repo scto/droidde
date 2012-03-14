@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import android.os.Environment;
 import android.util.Log;

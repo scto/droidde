@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.eyecreate;
+package com.eyecreate.droidde;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
