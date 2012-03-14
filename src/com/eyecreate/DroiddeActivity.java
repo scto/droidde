@@ -186,6 +186,13 @@ public class DroiddeActivity extends Activity {
 		EditorFragment edFragment = (EditorFragment) fragman.findFragmentById(R.id.fileeditor);
 		edFragment.openFile(f);
 	}
+	
+	public void removeFileFromProject(File f)
+	{
+		ProjectFilesFragment projectFiles = (ProjectFilesFragment) fragman.findFragmentById(R.id.filelist);
+		loadedProject.removeFileFromProject(f);
+		projectFiles.AddFilesToList(loadedProject.getProjectFiles());
+	}
 
 	private boolean checkFileForProject(String path) {
 		DocumentBuilder builder;

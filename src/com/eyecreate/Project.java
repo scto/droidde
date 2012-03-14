@@ -32,5 +32,7 @@ public interface Project {
 	public abstract void setMainProjectFile(File f);
 	
 	public abstract void addNewFileToProject(File f);
+	
+	public abstract void removeFileFromProject(File f);
 
 }

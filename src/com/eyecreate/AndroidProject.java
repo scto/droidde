@@ -314,6 +314,11 @@ public class AndroidProject implements Project {
 		triggerProjectStateSave();
 	}
 	
+	public void removeFileFromProject(File file)
+	{
+		if(!projectFiles.remove(file)) triggerProjectStateSave();
+	}
+	
 	public File getMainProjectFile()
 	{
 		return mainProjectFile;

@@ -50,6 +50,9 @@ public class EditorFragment extends Fragment {
 		    	case R.id.savefile:
 		    		if(openedFile != null) saveFile(openedFile);
 		    		return true;
+		    	case R.id.removefile:
+		    		if(openedFile != null) removeFile(openedFile);
+		    		return true;
 		        default:
 		            return super.onOptionsItemSelected(item);
 	    	}
@@ -108,6 +111,11 @@ public class EditorFragment extends Fragment {
 		}
 		 ret.setCurrentLangFromExt(f.getName().split("\\.")[f.getName().split("\\.").length-1]);
 
+	 }
+	 
+	 public void removeFile(File f)
+	 {
+		 ((DroiddeActivity)this.getActivity()).removeFileFromProject(f);
 	 }
 	 
 	 public void saveFile(File f)

@@ -18,4 +18,5 @@
     <string name="pickfiletype">Filetype</string>
     <string name="new_file_location">Location to Put File</string>
     <string name="create_file">Create</string>
+    <string name="remove_file">Remove Opened File</string>
 </resources>
