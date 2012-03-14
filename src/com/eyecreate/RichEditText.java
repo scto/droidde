@@ -13,6 +13,7 @@ import android.text.style.UpdateAppearance;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RichEditText extends EditText {
 
@@ -20,6 +21,7 @@ public class RichEditText extends EditText {
 	long lastmill=SystemClock.uptimeMillis();
 	String currentLang = "Java";
 	SyntaxConfig syntaxRegex;
+	boolean drawFail = false;
 	
 	public RichEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -105,7 +107,19 @@ public class RichEditText extends EditText {
 			 renumberLines(getLineCount());
 			 lastLines=getLineCount();
 		 }
-		 super.onDraw(c);
+		try{ 
+		super.onDraw(c);
+		drawFail=false;
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			e.printStackTrace();
+			if(!drawFail)
+			{
+				Toast.makeText(getRootView().getContext(), "Due to a bug, drawing is temporaily halted.", Toast.LENGTH_SHORT).show();
+				drawFail=true;
+			}
+		}
 	 }
 
 }
