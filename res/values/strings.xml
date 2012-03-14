@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome">Please Choose a Project to Open</string>
+    <string name="welcome">Please Create New Project or Open .dpj from File Manager</string>
     <string name="app_name">Droidde</string>
     <string name="newproject">New Project</string>
     <string name="invalidProject">Project is Invalid! Cannot load!</string>

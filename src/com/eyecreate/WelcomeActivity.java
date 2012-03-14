@@ -1,7 +1,10 @@
 package com.eyecreate;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,6 +12,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,10 +26,14 @@ import android.widget.Toast;
 
 public class WelcomeActivity extends Activity {
 	static final int DIALOG_NEW_PROJECT_ID = 0;
+	private File confDir = new File(Environment.getExternalStorageDirectory(), "droidde-config");
+	private File recentFile = new File(this.confDir, "recent.lst");
+	private String recentContents[];
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
+        checkRecentFile();
         
     }
     
@@ -47,6 +55,28 @@ public class WelcomeActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
     	}
     }
+    
+    private void checkRecentFile()
+    {
+    	if(!recentFile.exists())
+			try {
+				recentFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	try {
+			recentContents = FileUtils.readFileToString(recentFile).split(System.getProperty("line.separator"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	for (String s: recentContents)
+    	{
+    		//need to create recent list from simple list
+    	}
+    }
+    
     protected Dialog onCreateDialog (int id)
     {
     	final Dialog dialog;

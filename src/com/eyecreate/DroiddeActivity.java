@@ -189,7 +189,7 @@ public class DroiddeActivity extends Activity {
 	
 	public void removeFileFromProject(File f)
 	{
-		ProjectFilesFragment projectFiles = (ProjectFilesFragment) fragman.findFragmentById(R.id.filelist);
+		ProjectFilesFragment projectFiles = (ProjectFilesFragment) fragman.findFragmentById(R.id.projectfiles);
 		loadedProject.removeFileFromProject(f);
 		projectFiles.AddFilesToList(loadedProject.getProjectFiles());
 	}
