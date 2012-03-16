@@ -11,6 +11,8 @@ G.bshTask.fnPublishProgress("Aapt...");
 
 // mainActivity.bshTask.fnClear();
 
+File dir = new File(stSourcePath+"out/"+name);
+dir.mkdirs();
 args = "p -m -J "+stSourcePath+"gen -M "+stSourcePath+"AndroidManifest.xml -A "+stSourcePath+"assets -S "+stSourcePath+"res -I "+stSourcePath+"android.jar -f -F "+stSourcePath+"out/"+name+"/"+name+".apk.res";
 iResult = G.ide.fnAapt(args);
 

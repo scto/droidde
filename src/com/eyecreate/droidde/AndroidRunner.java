@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import org.apache.commons.io.FileUtils;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -77,7 +78,14 @@ public class AndroidRunner implements ProjectRunner {
 		intent.putExtra("android.intent.extra.ScriptPath", project.getProjectDir()+"/0_build.bsh");
 		intent.putExtra("android.intent.extra.ScriptAutoRun",true);
 		//intent.putExtra("android.intent.extra.ScriptAutoExit", true);
-		activity.startActivityForResult(intent, 42);
+		try
+		{
+			activity.startActivityForResult(intent, 42);
+		}
+		catch(ActivityNotFoundException ex)
+		{
+			Toast.makeText(activity.getApplicationContext(), "Java IDE droid app not found. Cannot compile!", Toast.LENGTH_LONG).show();
+		}
 		//later decide what to do with return values
 		return true;
 	}
