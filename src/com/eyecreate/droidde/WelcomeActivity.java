@@ -58,6 +58,8 @@ public class WelcomeActivity extends Activity {
     
     private void checkRecentFile()
     {
+    	if (!this.confDir.exists())
+			this.confDir.mkdirs();
     	if(!recentFile.exists())
 			try {
 				recentFile.createNewFile();
