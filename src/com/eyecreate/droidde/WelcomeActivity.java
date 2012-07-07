@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,6 +31,7 @@ public class WelcomeActivity extends Activity {
 	private File confDir = new File(Environment.getExternalStorageDirectory(), "droidde-config");
 	private File recentFile = new File(this.confDir, "recent.lst");
 	private String recentContents[];
+	private Dialog dialog;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,24 @@ public class WelcomeActivity extends Activity {
     	}
     }
     
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	if(requestCode == 314 && resultCode==RESULT_CANCELED)
+    	{
+    		//Insert cancel action here
+    	}
+    	if(requestCode == 314 && resultCode == RESULT_OK)
+    	{
+    		if(dialog != null)((EditText)dialog.findViewById(R.id.projectDirectory)).setText(data.getData().getPath());
+    	}
+    }
+    
+    private void toaster(String text)
+    {
+    	Toast.makeText(getBaseContext(), text, Toast.LENGTH_LONG).show();
+    }
+    
     private void checkRecentFile()
     {
     	if (!this.confDir.exists())
@@ -81,7 +102,6 @@ public class WelcomeActivity extends Activity {
     
     protected Dialog onCreateDialog (int id)
     {
-    	final Dialog dialog;
     	switch(id)
     	{
     		//Define the New Project Dialog window
@@ -106,6 +126,23 @@ public class WelcomeActivity extends Activity {
 						createNewProject(ProjectTypes.valueOf((String) projectType.getSelectedItem()), ((EditText)dialog.findViewById(R.id.projectName)).getText().toString(), ((EditText)dialog.findViewById(R.id.projectDirectory)).getText().toString());
 						
 						
+					}
+				});
+    			Button pick = (Button)dialog.findViewById(R.id.fileBrowseButton);
+    			pick.setOnClickListener(new View.OnClickListener() {
+					
+					public void onClick(View v) {
+						Intent pickIntent = new Intent("org.openintents.action.PICK_DIRECTORY");
+						pickIntent.setData(Uri.parse("file://"+Environment.getExternalStorageDirectory()));
+						pickIntent.putExtra("org.openintents.extra.TITLE",R.string.file_browse_title);
+						try
+						{
+							startActivityForResult(pickIntent, 314);
+						}
+						catch(ActivityNotFoundException ex)
+						{
+							toaster("Cannot find compatible file browser. OI File Manager is suggested.");
+						}
 					}
 				});
     			//Initialize adapter

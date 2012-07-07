@@ -19,4 +19,5 @@
     <string name="new_file_location">Location to Put File</string>
     <string name="create_file">Create</string>
     <string name="remove_file">Remove Opened File</string>
+    <string name="file_browse_title">Please Pick an Emtpy Folder for Project</string>
 </resources>
