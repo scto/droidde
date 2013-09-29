@@ -7,7 +7,7 @@
     <string name="project_name">untitledProject1</string>
     <string name="project_name_label">Project Name</string>
     <string name="project_location_label">Project Directory</string>
-    <string name="project_location_hint">Click and browse to the desired project directory</string>
+    <string name="project_location_hint">Click button and select desired project directory</string>
     <string name="saveproj">Save Project</string>
     <string name="runproj">Run Project</string>
     <string name="create_project">Create</string>
