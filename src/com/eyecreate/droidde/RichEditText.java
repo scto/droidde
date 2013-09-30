@@ -25,7 +25,7 @@ public class RichEditText extends EditText {
 	
 	public RichEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		syntaxRegex = new SyntaxConfig();
+		syntaxRegex = new SyntaxConfig(getRootView().getContext().getExternalFilesDir(null));
 		// TODO Auto-generated constructor stub
 	}
 	

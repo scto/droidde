@@ -35,6 +35,7 @@ public class AndroidProject implements Project {
 	private Document projectXML = null;
 	private DocumentBuilder dBuilder = null;
 	private boolean isValid;
+    private String failureMessage;
 	private ProjectTypes projectType = ProjectTypes.ANDROID;
 	private List<File> projectFiles = new ArrayList<File>();
 	private List<File> projectLibs = new ArrayList<File>();
@@ -93,6 +94,7 @@ public class AndroidProject implements Project {
 		else
 		{
 			Log.e("Droidde","Project directory is not empty. Must be empty in order to start a new project.");
+            failureMessage = "Project directory is not empty. Must be empty in order to start a new project.";
 			isValid=false;
 		}
 	}
@@ -120,6 +122,7 @@ public class AndroidProject implements Project {
 		}
 		catch(IllegalArgumentException e){
 			Log.e("Droidde", "Invalid project type given to createProject");
+            failureMessage = "Invalid project type given to createProject";
 			isValid=false;
 		}
 	}
@@ -324,4 +327,7 @@ public class AndroidProject implements Project {
 		return mainProjectFile;
 	}
 
+    public String getFailureMessage() {
+        return failureMessage;
+    }
 }

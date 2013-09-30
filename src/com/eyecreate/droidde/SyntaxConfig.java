@@ -1,23 +1,21 @@
 package com.eyecreate.droidde;
 
-import android.os.Environment;
 import android.util.Log;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class SyntaxConfig {
-	private File extStorage = Environment.getExternalStorageDirectory();
-	private File confDir = new File(this.extStorage, "droidde-config");
-	private File configFile = new File(this.confDir, "syntax.xml");
+	private File extStorage;
+    private File confDir;
+	private File configFile;
 	private Document configXML = null;
 	private DocumentBuilder dBuilder = null;
 	private DocumentBuilderFactory dbFactory = DocumentBuilderFactory
@@ -25,8 +23,11 @@ public class SyntaxConfig {
 	private Boolean finishedParse = Boolean.valueOf(false);
 	private Map<String, Map<String, String>> languageRegex = new HashMap<String, Map<String, String>>();
 
-	public SyntaxConfig() {
-		if (!this.confDir.exists())
+	public SyntaxConfig(File extDir) {
+		extStorage = extDir;
+        confDir = new File(this.extStorage, "droidde-config");
+        configFile = new File(this.confDir, "syntax.xml");
+        if (!this.confDir.exists())
 			this.confDir.mkdirs();
 		if (this.configFile.exists()) {
 			initializeRegex();
@@ -132,8 +133,7 @@ public class SyntaxConfig {
 	public String regexValue(String languageType, String valueName) {
 		// get regex value from Map
 		if(languageType.equals("")) return "";
-		return (String) ((Map<String, String>) languageRegex.get(languageType))
-				.get(valueName);
+		return (String) ((Map<String, String>) languageRegex.get(languageType)).get(valueName);
 	}
 	
 	public String languageFromFileType(String s){

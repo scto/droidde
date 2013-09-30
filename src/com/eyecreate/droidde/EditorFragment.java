@@ -18,7 +18,6 @@ import org.apache.commons.io.FileUtils;
 import android.app.Fragment;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -66,7 +65,7 @@ public class EditorFragment extends Fragment {
 		 else {
 			 //
 		 }
-		 File extStorage = Environment.getExternalStorageDirectory();
+		 File extStorage = getActivity().getBaseContext().getExternalFilesDir(null);
 		 File confDir = new File(extStorage,"droidde-config");
 		 if(!confDir.exists()) confDir.mkdirs();
 		 File configFile = new File(confDir,"syntax.xml");
@@ -134,7 +133,7 @@ public class EditorFragment extends Fragment {
 	 public void onResume() {
 		 super.onResume();
 		 //getView().setContentView(R.layout.editor);
-		 File extStorage = Environment.getExternalStorageDirectory();
+		 File extStorage = getActivity().getBaseContext().getExternalFilesDir(null);
 		 File confDir = new File(extStorage,"droidde-config");
 		 File configFile = new File(confDir,"syntax.xml");
 		 if(!configFile.exists()) copyFile("syntaxregex.xml",configFile.getAbsolutePath());

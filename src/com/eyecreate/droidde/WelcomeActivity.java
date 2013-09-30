@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,13 +27,15 @@ import android.widget.Toast;
 
 public class WelcomeActivity extends Activity {
 	static final int DIALOG_NEW_PROJECT_ID = 0;
-	private File confDir = new File(Environment.getExternalStorageDirectory(), "droidde-config");
-	private File recentFile = new File(this.confDir, "recent.lst");
+	private File confDir;
+	private File recentFile;
 	private String recentContents[];
 	private Dialog dialog;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        confDir = new File(getExternalFilesDir(null), "droidde-config");
+        recentFile = new File(this.confDir, "recent.lst");
         setContentView(R.layout.welcome);
         checkRecentFile();
         
@@ -179,14 +180,13 @@ public class WelcomeActivity extends Activity {
     		AndroidProject ap = new AndroidProject(path,name,type.name());
     		if(ap.isValid())
     		{
-    			ComponentName cn = new ComponentName("com.eyecreate","com.eyecreate.droidde.DroiddeActivity");
     			Intent intent = new Intent("android.intent.action.VIEW");
-    			intent.setComponent(cn);
+                intent.setClass(WelcomeActivity.this,DroiddeActivity.class);
     			intent.setData(Uri.parse("file://"+path+File.separator+name+".dpj"));
     			startActivity(intent);
     		}
     		else{
-    			Toast.makeText(getBaseContext(), "Project Creation went wrong.", Toast.LENGTH_LONG);
+    			toaster("Project Creation went wrong:"+ap.getFailureMessage());
     		}
     	}
     }

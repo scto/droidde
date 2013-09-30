@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.content.ActivityNotFoundException;
+import android.net.Uri;
+import android.os.Environment;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -32,6 +35,7 @@ public class DroiddeActivity extends Activity {
 	
 	FragmentManager fragman;
 	Project loadedProject;
+    private Dialog dialog;
 	static final int DIALOG_NEW_FILE_ID = 0;
 	/** Called when the activity is first created. */
     @Override
@@ -64,7 +68,6 @@ public class DroiddeActivity extends Activity {
     
     protected Dialog onCreateDialog(int id)
     {
-    	final Dialog dialog;
     	switch(id)
     	{
     	case DIALOG_NEW_FILE_ID:
@@ -87,7 +90,7 @@ public class DroiddeActivity extends Activity {
 					//should really do some checks here to make sure bad values don't mess things up.
 					//including quick sanity check on location, though
 					if(!((EditText)dialog.findViewById(R.id.fileLocation)).getText().toString().contains(loadedProject.getProjectDir().getAbsolutePath())){
-						Toast.makeText(getBaseContext(), "File not created. Location is not in project directory.", Toast.LENGTH_LONG);
+						Toast.makeText(getBaseContext(), "File not created. Location is not in project directory.", Toast.LENGTH_LONG).show();
 						return;
 					}
 					File newFile = new File( ((EditText)dialog.findViewById(R.id.fileLocation)).getText().toString()+File.separator+((EditText)dialog.findViewById(R.id.fileName)).getText().toString()+"."+((String) fileTypes.getSelectedItem()) );
@@ -96,7 +99,7 @@ public class DroiddeActivity extends Activity {
 							newFile.createNewFile();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							Toast.makeText(getBaseContext(), "File not created. Problem creating file.", Toast.LENGTH_LONG);
+							Toast.makeText(getBaseContext(), "File not created. Problem creating file.", Toast.LENGTH_LONG).show();
 							e.printStackTrace();
 							return;
 						}
@@ -107,6 +110,22 @@ public class DroiddeActivity extends Activity {
 					
 				}
 			});
+            Button browse = (Button)dialog.findViewById(R.id.newFileBrowse);
+            browse.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent pickIntent = new Intent("org.openintents.action.PICK_DIRECTORY");
+                    pickIntent.setData(Uri.parse("file://" + loadedProject.getProjectDir()));
+                    pickIntent.putExtra("org.openintents.extra.TITLE",R.string.file_browse_title);
+                    try
+                    {
+                        startActivityForResult(pickIntent, 314);
+                    }
+                    catch(ActivityNotFoundException ex)
+                    {
+                        Toast.makeText(getBaseContext(),"Cannot find compatible file browser. OI File Manager is suggested.",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 			//Initialize adapter
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,
 					fileTypeArray);
@@ -141,12 +160,16 @@ public class DroiddeActivity extends Activity {
     {
     	if(requestCode == 42 && resultCode==RESULT_CANCELED)
     	{
-    		Toast.makeText(getBaseContext(), "Problem while running/compiling.", Toast.LENGTH_LONG);
+    		Toast.makeText(getBaseContext(), "Problem while running/compiling.", Toast.LENGTH_LONG).show();
     	}
     	if(requestCode == 42 && resultCode == RESULT_OK)
     	{
     		loadedProject.handleRunResult(data);
     	}
+        if(requestCode == 314 && resultCode == RESULT_OK)
+        {
+            if(dialog != null) ((EditText)dialog.findViewById(R.id.fileLocation)).setText(data.getData().getPath());
+        }
     }
 
 	private void findFaultAndNotify() {

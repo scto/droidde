@@ -14,14 +14,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <EditText
             android:id="@+id/fileName"
-            android:layout_width="992dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1" android:hint="Name of file without extension."/>
 
         <Spinner
             android:id="@+id/fileTypes"
@@ -40,20 +40,21 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <EditText
             android:id="@+id/fileLocation"
-            android:layout_width="890dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:editable="false"
+            android:hint="Folder file will be created in."/>
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:id="@+id/newFileBrowse"
+            android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/file_browse" />
+            android:text="@string/file_browse"/>
 
     </LinearLayout>
 
