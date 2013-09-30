@@ -303,7 +303,12 @@ public class AndroidProject implements Project {
 	
 	public String getMainFile()
 	{
-		return mainProjectFile.getAbsolutePath();
+		if(mainProjectFile != null && mainProjectFile.exists()) return mainProjectFile.getAbsolutePath();
+        else
+        {
+            failureMessage = "No main file selected or file no longer exists.";
+            return null;
+        }
 	}
 	
 	public void setMainProjectFile(File f)

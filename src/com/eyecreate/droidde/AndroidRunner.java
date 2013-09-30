@@ -19,9 +19,11 @@ import android.widget.Toast;
 public class AndroidRunner implements ProjectRunner {
 	
 	Project localProject;
+    Activity parentActivity;
 
 	public boolean runProject(Project project,Activity activity) {
 		AssetManager assetM = activity.getAssets();
+        parentActivity = activity;
 		localProject = project;
 		//Copy assets to project folder
 		copyFile(assetM,"0_build.bsh",project.getProjectDir()+"/0_build.bsh");
@@ -110,6 +112,10 @@ public class AndroidRunner implements ProjectRunner {
 	private String getMainFile(Project project)
 	{
 		String path = ((AndroidProject)project).getMainFile();
+        if (path == null){
+            Toast.makeText(parentActivity.getApplicationContext(),((AndroidProject)project).getFailureMessage() , Toast.LENGTH_LONG).show();
+            return "";
+        }
 		return new File(path).getAbsolutePath().replace(project.getProjectDir().getAbsolutePath()+"/","");
 	}
 	
