@@ -145,7 +145,7 @@ public class DroiddeActivity extends Activity {
 	    		loadedProject.triggerProjectStateSave();
 	    		return true;
 	    	case R.id.run:
-	    		if(!loadedProject.runProject(this)) Toast.makeText(getBaseContext(), "Project failed to run!", Toast.LENGTH_LONG);
+	    		if(!loadedProject.runProject(this)) Toast.makeText(getBaseContext(), "Project failed to run!", Toast.LENGTH_LONG).show();
 	    		return true;
 	    	case R.id.addfile:
 	    		showDialog(DIALOG_NEW_FILE_ID);
