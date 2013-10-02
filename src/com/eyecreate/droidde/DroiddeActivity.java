@@ -107,6 +107,10 @@ public class DroiddeActivity extends Activity {
 		    		fragman=getFragmentManager();
 		    		ProjectFilesFragment projFiles = (ProjectFilesFragment) fragman.findFragmentById(R.id.projectfiles);
 		    		projFiles.AddFilesToList(loadedProject.getProjectFiles());
+                    if(loadedProject.getProjectFiles().size()==1) {
+                        projFiles.lv.invalidateViews();
+                        setProjectMainFile(projFiles.fileList.get(0));
+                    }
 					
 				}
 			});
@@ -126,6 +130,8 @@ public class DroiddeActivity extends Activity {
                     }
                 }
             });
+            EditText projectDir = (EditText)dialog.findViewById(R.id.fileLocation);
+            projectDir.setText(loadedProject.getProjectDir().getAbsolutePath());
 			//Initialize adapter
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,
 					fileTypeArray);
