@@ -132,7 +132,7 @@ public class SyntaxConfig {
 
 	public String regexValue(String languageType, String valueName) {
 		// get regex value from Map
-		if(languageType.equals("")) return "";
+		if(languageType.equals("")||!finishedParse) return "";
 		return (String) ((Map<String, String>) languageRegex.get(languageType)).get(valueName);
 	}
 	
