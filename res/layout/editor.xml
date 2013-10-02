@@ -28,7 +28,7 @@ android:id="@+id/linenumbers"
   android:editable="true"
   android:gravity="top|left"
   android:textColor="#000000"
-  android:background="#FFFFFF">
+  android:background="#FFFFFF" android:enabled="false">
 
     
 </com.eyecreate.droidde.RichEditText>

@@ -104,6 +104,7 @@ public class EditorFragment extends Fragment {
 		 RichEditText ret = (RichEditText) getActivity().findViewById(R.id.editorcontent);
 		 try {
 			ret.setText(FileUtils.readFileToString(f));
+            ret.setEnabled(true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
